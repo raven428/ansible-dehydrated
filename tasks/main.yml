@@ -1,6 +1,13 @@
 ---
-- name: Install dehydrated dependencies
+- name: Install apt dehydrated dependencies
   apt: name={{ dehydrated_dependencies }}
+  when:
+    - ansible_pkg_mgr == "apt"
+
+- name: Install rhel dehydrated dependencies
+  yum: name={{ dehydrated_dependencies }}
+  when:
+    - ansible_pkg_mgr in ['yum', 'dnf']
 
 - name: Checkout dehydrated from github
   git:
